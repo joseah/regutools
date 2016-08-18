@@ -1,0 +1,9 @@
+Package: regutools
+Title: Extracts and processes data from RegulonDB
+Version: 0.0.0.9000
+Authors@R: person("Jose", "Alquicira-Hernandez", email = "joseah@lcg.unam.mx", role = c("aut", "cre"))
+Description: Extracts and processes data from RegulonDB
+Depends: R (>= 3.3.0)
+License: GNU GENERAL PUBLIC LICENSE
+Encoding: UTF-8
+LazyData: true
