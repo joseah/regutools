@@ -31,6 +31,7 @@ importantes y de interés de objetos, atributos e interacciones biológicas.
 # Notas
 
 > Incluir id y nombre de objeto como entrada de la búsqueda
+
 > Evaluar incluir búsquedas tipo *google-like* (Search all text)
 
 
