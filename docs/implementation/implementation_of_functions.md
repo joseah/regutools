@@ -3,7 +3,7 @@ title: Implementation of `Regutools` functions in R
 author: José Alquicira Hernández
 ---
 
-# Get biological elements within a genomic locations
+# Get biological elements within a genomic location
 
 - **Function name**: `getElements()`
 - **Description**: Thi function retrieves all or some biological elements within an defined genomic interval
