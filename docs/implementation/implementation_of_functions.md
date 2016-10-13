@@ -27,7 +27,7 @@ res <- getElements(start = 100000, end = 150000,
  + Return error if interval is out of range (invalid genomic positions)
  + Return error if biological type elements to be retrieved are invalid and print a message of possible values
  + If no element is found, return an empty vector and print a message
- + Validate if provided variable to `conn` is indeed a connection
+ + Validate if provided variable to `con` is indeed a connection
 
 
 # Get attributes and relationships of biological elements
