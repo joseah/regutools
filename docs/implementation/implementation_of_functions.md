@@ -6,7 +6,7 @@ author: José Alquicira Hernández
 # Get biological elements within a genomic location
 
 - **Function name**: `getElements()`
-- **Description**: Thi function retrieves all or some biological elements within an defined genomic interval
+- **Description**: Thi function retrieves all or some biological elements within a defined genomic interval
 - **Parameters**:
   + **start**. Initial position in Kbs 
   + **end**. Final position in Kbs
