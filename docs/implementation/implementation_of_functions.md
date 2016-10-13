@@ -62,4 +62,25 @@ res <- getRG(attributes = c("gene_id", "gene_name", "gene_type"),
   + Validate if provided variable to `conn` is indeed a connection
   + If nothing is found, return an empty data.frame and print a message
 
-  
+# List all available attributes in Marts
+    
+- **Function name**: `listAttributes()`
+- **Description**: This function returns all available attributes which can be obtained from each Mart using the `getRG()` function
+- **Parameters**:
+  + **mart**. Type of information to be retrieved. (Gene, Promoter, TU, Operon, ...) 
+  + **conn**. Connection to sqlite database
+
+- **Output**: A data frame two columns.
+  + **columns**
+      + **name**
+      + **description**
+- **Example**:
+
+```R
+listAttributes(mart = "gene", con = conn)
+```
+
+- **Validations**
+  + Return error if mart is invalid. Print all available marts
+  + Validate if provided variable to `conn` is indeed a connection
+
