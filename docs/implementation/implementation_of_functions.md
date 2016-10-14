@@ -6,15 +6,19 @@ author: José Alquicira Hernández
 # Get biological elements within a genomic location
 
 - **Function name**: `getElements()`
-- **Description**: This function retrieves all or some biological elements within a defined genomic physical interval
+- **Description**: This function retrieves all or some biological objects within a defined genomic physical interval
 - **Parameters**:
   + **start**. Initial position in Kbs 
   + **end**. Final position in Kbs
   + **type**. Retrive only some biological elements (promoter, gene, binding site)
   + **conn**. Connection to sqlite database
 - **Output**: A data frame with two columns.
-  + **id**: element id
-  + **name**: element name
+  + **id**: object id
+  + **name**: object name
+  + **start**: start position
+  + **end**: end position
+  + **strand**: strand location
+  + **type**: object type
 - **Example**:
 
 ```r
@@ -22,12 +26,14 @@ res <- getElements(start = 100000, end = 150000,
                    type = c("promoter","gene"), 
                    con = conn)
 ```
+
 - **Validations**
  + Return error if `start` and `end` values are not numbers
  + Return error if interval is out of range (invalid genomic positions)
  + Return error if biological type elements to be retrieved are invalid and print a message of possible values
  + If no element is found, return an empty vector and print a message
  + Validate if provided variable to `con` is indeed a connection
+ + Object physical position is contained in provided range at least in 1 base pair
 
 
 # Get attributes and relationships of biological elements
@@ -41,10 +47,8 @@ res <- getElements(start = 100000, end = 150000,
   + **mart**. Type of information to be retrieved. (Gene, Promoter, TU, Operon, ...) 
   + **conn**. Connection to sqlite database
 
-- **Output**: A data frame with 2 + n columns.
+- **Output**: A data frame with n columns.
   + **columns**
-      + **id**
-      + **name**
       + **n columns**. Corresponding to requested attribute(s)
 - **Example**:
 
