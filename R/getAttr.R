@@ -1,42 +1,52 @@
-getAttr<-function(attributes=NULL, filters=NULL, values=NULL, mart=NULL, operator='AND'){
+getAttr<-function(attributes=NULL, filters=NULL, values=NULL, dataset=NULL, operator='AND'){
+  #Validate dataset
+  if(!all(dataset %in% listMarts())){ #
+    stop("The dataset you use dont exist in the database. Check function listDatasets()",call.= FALSE)
+  }
   
   #Validate attributes
-  if(!prod(attributes %in% listAttributes(mart))){stop("The attributes to be retrieved do not exist. Please check listAttributes() function.")}
+  if(!all(attributes %in% listAttributes(dataset))){
+    stop("The attributes to be retrieved do not exist. Please check listAttributes() function.",call.= FALSE)
+  }
+  
+  #Validate if filters and values are the same size. Note: Also validates if either filters or values are null. 
+  if(length(filters)!=length(values)){ 
+    stop("Parameters 'filters' and 'values' must be vectors of the same length.",call.= FALSE)
+  }
   
   #Make query
   if(is.null(filters)){
-    query<-paste("SELECT ", paste(attributes, collapse=" , ")," FROM ", mart,sep="")
+    query<-paste("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, "; ",sep="")
   } else {
     
     #Validate filters
-    if(length(filters)!=length(values)){ stop("Parameters 'filters' and 'values' must be vectors of the same length.")}
-    if(!prod(filters %in% listAttributes(mart))){stop("The filters do not exist. Please check listAttributes() function.")}
+    if(!all(filters %in% listAttributes(dataset))){
+      stop("The filters do not exist. Please check listAttributes() function.",call.= FALSE)}
     
-    
-    query <- paste(filters[1]," = \"",values[1],"\"", sep="") 
+    #Make Query
+    query <- paste(" ",filters[1]," = '",values[1],"'", sep="") 
     if(length(filters) > 1){
-      query<-c(query, apply(cbind(filters,values),1,function(x){
-        result<-paste(" ",operator," ", x[1], " =\"", x[2],"\"",sep="")
+      query<-c(query, apply(cbind(filters,values),1,function(x){ # Is x a meaningful name?
+        result<-paste(" ", x[1], " = '", x[2],"\"",sep="") # x can be either a filter: x[1] or a value: x[2]  
         return(result)
-      }))
-      query<-paste(query,collapse=" ")
+      })
+      )
+      query<-paste(query,collapse=operator)
     }
-    query<-paste("SELECT ", paste(attributes, collapse=" , ")," FROM ", mart, " WHERE ", query, sep="") #Construct query
+    query<-paste("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, " WHERE ", query, sep="") #Construct query
     
   }
   
   #Connect to database
-  library(RSQLite)
-  db<-dbConnect(SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
+  regulon<-dbConnect(SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
   
   #Retrieve data
-  result <-dbGetQuery(db, query)
-  
-  dbDisconnect(db)
+  result <-dbGetQuery(regulon, query)
+  dbDisconnect(regulon)
   
   #Check if results are empty 
   if(!nrow(result)){
-    print("Your query produced no results. Try changing the filters, values or attributes to be retrieved.")
+    stop("Your query produced no results. Try changing the filters, values or attributes to be retrieved.",call.= FALSE)
   }
   return(result)
 }
