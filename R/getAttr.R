@@ -52,11 +52,11 @@ getAttr<-function(attributes=NULL, filters=NULL, values=NULL, dataset=NULL, oper
   }
   
   #Connect to database
-  regulon<-dbConnect(SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
+  regulon<-RSQLite::dbConnect(RSQLite::SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
   
   #Retrieve data
-  result <-dbGetQuery(regulon, query)
-  dbDisconnect(regulon)
+  result <-RSQLite::dbGetQuery(regulon, query)
+  RSQLite::dbDisconnect(regulon)
   
   #Check if results are empty 
   if(!nrow(result)){

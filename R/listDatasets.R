@@ -9,8 +9,10 @@
 #' listAttributes("GENE")
 
 listDatasets<-function(){
-  regulon<-dbConnect(SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
-  result<-dbListTables(regulon)
-  dbDisconnect(regulon)
-  return(result)
+    #Connect to database
+    regulon<-RSQLite::dbConnect(RSQLite::SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
+    #List tables
+    result<-RSQLite::dbListTables(regulon)
+    RSQLite::dbDisconnect(regulon)
+    return(result)
 }
