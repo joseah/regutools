@@ -1,3 +1,17 @@
+#' Get Attributes
+#'
+#' Retrieve attributes from datasets.
+#' @param
+#' attributes Attributes to be retrieved.  Defaults to NULL.
+#' filters   Filters to be used.  Defaults to NULL.
+#' values Values to filter with.  Defaults to NULL.
+#' dataset Dataset to retrieve from. Defaults to NULL.
+#' operator  Logical operator for the filters: AND / OR.  Defaults to AND.
+#' @keywords data retrieval, attributes,
+#' @export
+#' @examples
+#' getAttr(attributes=c("gene_id"), dataset="GENE")
+
 getAttr<-function(attributes=NULL, filters=NULL, values=NULL, dataset=NULL, operator='AND'){
   #Validate dataset
   if(!all(dataset %in% listMarts())){ #
