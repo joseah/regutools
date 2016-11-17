@@ -18,7 +18,7 @@ listAttributes<-function(dataset){
   }
   
   #Connection
-  regulon<-RSQLite::dbConnect(RSQLite::SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
+  regulon<-RSQLite::dbConnect(RSQLite::SQLite(), system.file("extdata", "regulondb_92_sqlite3.db", package = "regutools"))
   result<-RSQLite::dbListFields(regulon,dataset)
   RSQLite::dbDisconnect(regulon)
   return(result)

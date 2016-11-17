@@ -10,7 +10,7 @@
 
 listDatasets<-function(){
     #Connect to database
-    regulon<-RSQLite::dbConnect(RSQLite::SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
+    regulon<-RSQLite::dbConnect(RSQLite::SQLite(), system.file("extdata", "regulondb_92_sqlite3.db", package = "regutools"))
     #List tables
     result<-RSQLite::dbListTables(regulon)
     RSQLite::dbDisconnect(regulon)

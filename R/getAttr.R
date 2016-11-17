@@ -14,7 +14,7 @@
 
 getAttr<-function(attributes=NULL, filters=NULL, values=NULL, dataset=NULL, operator='AND'){
   #Validate dataset
-  if(!all(dataset %in% listMarts())){ #
+  if(!all(dataset %in% listDatasets())){ #
     stop("The dataset you use dont exist in the database. Check function listDatasets()",call.= FALSE)
   }
   
@@ -52,7 +52,7 @@ getAttr<-function(attributes=NULL, filters=NULL, values=NULL, dataset=NULL, oper
   }
   
   #Connect to database
-  regulon<-RSQLite::dbConnect(RSQLite::SQLite(), dbname="/Users/emimemime/Desktop/funcionesEmi/regulondb_92_sqlite3.db")
+  regulon<-RSQLite::dbConnect(RSQLite::SQLite(), system.file("extdata", "regulondb_92_sqlite3.db", package = "regutools"))
   
   #Retrieve data
   result <-RSQLite::dbGetQuery(regulon, query)
