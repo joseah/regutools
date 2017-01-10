@@ -1,12 +1,10 @@
 #' List available datasets in RegulonDB database
 #'
-#' This function returns a vector of all available datasets.
-#' @param
-#' No parameters are used.
-#' @keywords data retrieval, datasets, database
+#' This function returns a vector of all available datasets. No parameters are provided.
+#' @keywords data retrieval, datasets, database,
 #' @export
 #' @author 
-#' Carmina Barberena Jonas, Jesús Emiliano Sotelo Fonseca, Jose Alquicira Hernandez
+#' Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, Josá Alquicira Hernández
 #' @examples
 #' listDatasets()
 
