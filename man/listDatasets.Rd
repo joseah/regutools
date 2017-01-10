@@ -2,7 +2,7 @@
 % Please edit documentation in R/listDatasets.R
 \name{listDatasets}
 \alias{listDatasets}
-\title{List Datasets}
+\title{List available datasets in RegulonDB database}
 \usage{
 listDatasets()
 }
@@ -10,12 +10,16 @@ listDatasets()
 \item{No}{parameters are used.}
 }
 \description{
-List datasets available.
+This function returns a vector of all available datasets.
 }
 \examples{
-listAttributes("GENE")
+listDatasets()
 }
-\keyword{attributes,}
+\author{
+Carmina Barberena Jonas, Jesús Emiliano Sotelo Fonseca, Jose Alquicira Hernandez
+}
 \keyword{data}
+\keyword{database}
+\keyword{datasets,}
 \keyword{retrieval,}
 
