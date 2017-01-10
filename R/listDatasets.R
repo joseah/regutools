@@ -1,18 +1,22 @@
-#' List Datasets
+#' List available datasets in RegulonDB database
 #'
-#' List datasets available.
+#' This function returns a vector of all available datasets.
 #' @param
 #' No parameters are used.
-#' @keywords data retrieval, attributes,
+#' @keywords data retrieval, datasets, database
 #' @export
+#' @author 
+#' Carmina Barberena Jonas, Jesús Emiliano Sotelo Fonseca, Jose Alquicira Hernandez
 #' @examples
-#' listAttributes("GENE")
+#' listDatasets()
 
-listDatasets<-function(){
-    #Connect to database
-    regulon<-RSQLite::dbConnect(RSQLite::SQLite(), system.file("extdata", "regulondb_sqlite3.db", package = "regutools"))
-    #List tables
-    result<-RSQLite::dbListTables(regulon)
+listDatasets <- function(){
+    #Connects to database
+    regulon <- RSQLite::dbConnect(RSQLite::SQLite(), 
+                                  system.file("extdata", "regulondb_sqlite3.db", 
+                                              package = "regutools"))
+    #Lists tables
+    result <- RSQLite::dbListTables(regulon)
     RSQLite::dbDisconnect(regulon)
     return(result)
 }
