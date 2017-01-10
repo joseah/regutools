@@ -6,20 +6,17 @@
 \usage{
 listDatasets()
 }
-\arguments{
-\item{No}{parameters are used.}
-}
 \description{
-This function returns a vector of all available datasets.
+This function returns a vector of all available datasets. No parameters are provided.
 }
 \examples{
 listDatasets()
 }
 \author{
-Carmina Barberena Jonas, Jesús Emiliano Sotelo Fonseca, Jose Alquicira Hernandez
+Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, Josá Alquicira Hernández
 }
 \keyword{data}
-\keyword{database}
+\keyword{database,}
 \keyword{datasets,}
 \keyword{retrieval,}
 

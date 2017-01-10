@@ -2,7 +2,7 @@
 % Please edit documentation in R/listAttributes.R
 \name{listAttributes}
 \alias{listAttributes}
-\title{List Attributes}
+\title{List attributes from dataset}
 \usage{
 listAttributes(dataset)
 }
@@ -10,10 +10,15 @@ listAttributes(dataset)
 \item{dataset}{Dataset to retrieve from. Defaults to NULL.}
 }
 \description{
-List attributes from datasets.
+Lists attributes of datasets from RegulonDB. The result of this function may
+be used as parameter values in `getAttr` function.
 }
 \examples{
-listAttributes("GENE")
+listAttributes("TF_DM")
+listAttributes("OPERON_DM")
+}
+\author{
+Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, José Alquicira Hernández
 }
 \keyword{attributes,}
 \keyword{data}

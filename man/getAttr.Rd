@@ -8,19 +8,27 @@ getAttr(attributes = NULL, filters = NULL, values = NULL,
   dataset = NULL, operator = "AND")
 }
 \arguments{
-\item{attributes}{Attributes to be retrieved.  Defaults to NULL.
-filters   Filters to be used.  Defaults to NULL.
-values Values to filter with.  Defaults to NULL.
-dataset Dataset to retrieve from. Defaults to NULL.
-operator  Logical operator for the filters: AND / OR.  Defaults to AND.}
+\item{attributes}{Attributes to be retrieved.}
+
+\item{filters}{Filters to be used.}
+
+\item{values}{Values to filter with.}
+
+\item{dataset}{Dataset to retrieve from.}
+
+\item{operator}{Logical operator for the filters: AND / OR.  Defaults to AND.}
 }
 \description{
-Retrieve attributes from datasets.
+Retrieve information based on attributes and filters from datasets.
 }
 \examples{
 getAttr(attributes=c("gene_id"), dataset="GENE")
 }
+\author{
+Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, José Alquicira Hernández
+}
 \keyword{attributes,}
 \keyword{data}
+\keyword{filters,}
 \keyword{retrieval,}
 
