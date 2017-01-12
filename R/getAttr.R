@@ -21,7 +21,7 @@
 
 getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = NULL, operator = 'AND'){
   # Validate dataset
-  if(!all(dataset %in% listDatasets())){ #
+  if(!all(dataset %in% listDatasets())){
     stop("Non-existing dataset used. Please check listDatasets() function.", call.= FALSE)
   }
 
