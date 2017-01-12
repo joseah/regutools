@@ -37,7 +37,7 @@ getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = 
 
   # Query database
   if(is.null(filters)){
-    query <- paste("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, "; ",sep = "")
+    query <- paste0("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, "; ")
   } else {
 
     # Validate filters
@@ -54,12 +54,12 @@ getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = 
       )
       query <- paste(query, collapse = operator)
     }
-    query <- paste("SELECT ", paste(attributes, collapse = " , "), " FROM ", dataset, " WHERE ", query, sep = "") #Construct query
+    query <- paste0("SELECT ", paste(attributes, collapse = " , "), " FROM ", dataset, " WHERE ", query) #Construct query
 
   }
 
   # Connect to database
-  regulon<-RSQLite::dbConnect(RSQLite::SQLite(), system.file("extdata", "regulondb_sqlite3.db", package = "regutools"))
+  regulon <- RSQLite::dbConnect(RSQLite::SQLite(), system.file("extdata", "regulondb_sqlite3.db", package = "regutools"))
 
   # Retrieve data
   result <- RSQLite::dbGetQuery(regulon, query)
