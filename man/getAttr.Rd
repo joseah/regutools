@@ -22,7 +22,13 @@ getAttr(attributes = NULL, filters = NULL, values = NULL,
 Retrieve information based on attributes and filters from datasets.
 }
 \examples{
-getAttr(attributes=c("gene_id"), dataset="GENE")
+# Retrieve all genes included in all operons 
+# regulated by CRP transcriptional factor.
+
+getAttr(attributes = c("operon_name", "op_gene_names"), 
+filters = c("op_tf_names"), 
+values = "CRP", 
+dataset = "OPERON_DM")
 }
 \author{
 Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, José Alquicira Hernández
