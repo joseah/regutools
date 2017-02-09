@@ -3,7 +3,7 @@
 #' @author José Alquicira Hernández
 #' @param method Name of the method to be used from RSAT
 #' @param parameters List of parameters provided to method
-#' @return an R object with results retrieved from RSAT
+#' @return an XML schema
 #' @examples
 #' request <- BuildXml("supported_organisms",
 #'                      parameters = list(return = "name,source",
