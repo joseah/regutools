@@ -5,9 +5,15 @@
 #' @param parameters List of parameters provided to method
 #' @return an R object with results retrieved from RSAT
 #' @examples
-#' RSAT(method = "supported_organisms",
-#'     parameters = list(return = "ID,name",
-#'                       source = "NCBI"))
+#'
+#' # Get 50 random protein sequences of length 100 in fasta format. Use number 300 as seed.
+#'
+#' RSAT(method = "random_seq",
+#'     parameters = list(sequence_length = 100,
+#'                       repetition = 50,
+#'                       type = "protein",
+#'                       seed = 300,
+#'                       format = "fasta"))
 #' @export
 
 RSAT <- function(method, parameters = NULL){
