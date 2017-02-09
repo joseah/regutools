@@ -1,6 +1,6 @@
-#' Get Attributes
+#' Get data from RegulonDB
 #'
-#' Retrieve information based on attributes and filters from datasets.
+#' Retrieve information based on attributes and filters from datasets in RegulonDB.
 #' @param attributes Attributes to be retrieved.
 #' @param filters   Filters to be used.
 #' @param values Values to filter with.
