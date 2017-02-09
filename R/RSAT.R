@@ -19,12 +19,18 @@ RSAT <- function(method, parameters = NULL){
     request <- BuildXml(method = method)
   }
 
+  # Communicates to RSAT
   res <- POST("http://embnet.ccg.unam.mx/rsa-tools//web_services/RSATWS.cgi",
        body = request,
        content_type("text/xml; charset=utf-8"))
   stop_for_status(res)
   res <- content(res)
-  return(res)
+
+  # Extracts result from XML response
+  res.format <- xmlToList(xmlParse(res))
+  res.text <- res.format$Body[[1]]$response$client$text
+
+  return(res.text)
 
 }
 
