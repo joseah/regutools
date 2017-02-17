@@ -57,7 +57,5 @@ RandomSeq <- function(n, len, format = NULL, type = NULL, seed = NULL,
 
   res <- RSAT(method = "random_seq",
               parameters = parameters)
-  res.format <- xmlToList(xmlParse(res))
-  res.text <- res.format$Body[[1]]$response$client$text
-  return(res.text)
+  return(res)
 }
