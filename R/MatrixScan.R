@@ -1,7 +1,6 @@
 #' @title Matrix scan.
 #' @description Scan sequences with one or several position-specific scoring matrices (PSSM) to identify instances of the corresponding motifs(putative sites). This program supports a variety of background models (Bernoulli},  Markov chains of any order)..
 #' @author José Alquicira Hernández
-#' @param
 #' @param sequence Sequence(s) to scan - all the formats supported in RSAT can be used as input (default: fasta)
 #' @param matrix Matrix/ces to scan with. The matrix format is specified with the option "matrix_format" (see below) Default format: tab.
 #' @param sequence.format Supported fields: fasta (default)},  IG (Intelligenetics)},  WC (wconsensus)},  raw.
