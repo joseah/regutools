@@ -20,26 +20,31 @@ RSAT <- function(method, parameters = NULL){
 
   if(!is.null(parameters)){
     request <- BuildXml(method = method,
-                      parameters = parameters)
+                        parameters = parameters)
   }else{
     request <- BuildXml(method = method)
   }
 
-  # Communicates to RSAT
-  res <- POST("http://embnet.ccg.unam.mx/rsa-tools//web_services/RSATWS.cgi",
-       body = request,
-       content_type("text/xml; charset=utf-8"))
-  stop_for_status(res)
-  res <- content(res)
 
-  # Extracts result from XML response
-  res.format <- xmlToList(xmlParse(res))
-  res.text <- res.format$Body[[1]]$response$client$text
-
-  return(res.text)
-
+  out <- tryCatch({
+    # Communicates to RSAT
+    res <- POST("http://embnet.ccg.unam.mx/rsa-tools//web_services/RSATWS.cgi",
+                body = request,
+                content_type("text/xml; charset=utf-8"))
+    stop_for_status(res)
+    res <- content(res)
+    # Extracts result from XML response
+    res.format <- xmlToList(xmlParse(res))
+    res.format$Body[[1]]$response$client$text
+  },
+  error = function(cond){
+    message(cond)
+    message("\nSee error details in output.")
+    res <- content(res)
+    # Extracts result from XML response
+    res.format <- xmlToList(xmlParse(res))
+    return(res.format$Body)
+  }
+  )
+  return(out)
 }
-
-# RSAT(method = "supported_organisms",
-#      parameters = list(return = "ID,name",
-#                        source = "NCBI"))
