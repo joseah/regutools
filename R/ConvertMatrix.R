@@ -83,7 +83,5 @@ ConvertMatrix <- function(matrix, from = NULL, to = NULL,
 
   res <- RSAT(method = "convert_matrix",
               parameters = parameters)
-  res.format <- xmlToList(xmlParse(res))
-  res.text <- res.format$Body[[1]]$response$client$text
-  return(res.text)
+  return(res)
 }
