@@ -1,10 +1,24 @@
 #' @title Matrix scan.
-#' @description Scan sequences with one or several position-specific scoring matrices (PSSM) to identify instances of the corresponding motifs(putative sites). This program supports a variety of background models (Bernoulli),  Markov chains of any order).
+#' @description Scan sequences with one or several position-specific scoring matrices (PSSM) to identify instances of the corresponding motifs (putative sites). This function supports a variety of background models (Bernoulli, Markov chains of any order).
 #' @author José Alquicira Hernández
-#' @param sequence Sequence(s) to scan - all the formats supported in RSAT can be used as input (default: fasta)
-#' @param matrix Matrix/ces to scan with. The matrix format is specified with the option "matrix_format" (see below) Default format: tab.
-#' @param sequence.format Supported fields: fasta (default),  IG (Intelligenetics),  WC (wconsensus),  raw.
-#' @param matrix.format Supported fields: tab, cb, consensus, gibbs, meme, assembly.
+#' @param sequence Sequence(s) to scan - all the formats supported in RSAT can be used as input (default: \code{fasta})
+#' @param matrix Matrix/ces to scan with. The matrix format is specified with the option \code{matrix.format} (see below) Default format: \code{tab}.
+#' @param sequence.format Supported fields:
+#' \itemize{
+#' \item \code{fasta} (default)
+#' \item \code{IG} (Intelligenetics)
+#' \item \code{WC} (wconsensus)
+#' \item \code{raw}
+#' }
+#' @param matrix.format Supported fields:
+#' \itemize{
+#' \item \code{tab}
+#' \item \code{cb}
+#' \item \code{consensus}
+#' \item \code{gibbs}
+#' \item \code{meme}
+#' \item \code{assembly}
+#' }
 #' @param quick Delegates scanning to the C program matrix-scan-quick (developed by Matthieu Defrance). Evaluate if the quick mode is compatible with the selected output parameters, otherwise, run in the slower mode. Incompatible with - CRER scanning - window background model.
 #' @param n.treatment Treatment of N characters. These characters are often used in DNA sequences to represent undefined or masked nucleotides.
 #' \itemize{
@@ -16,8 +30,15 @@
 #' @param equi.pseudo If this option is called,  the pseudo-weight is distributed in an equiprobable way between residues. By default,  the pseudo-weight is distributed proportionally to residue priors,  except for the -window option where equipseudo is default.
 #' @param top.matrices Only scan with the top # matrices per matrix file. This option is valid for some file formats containing multiple matrices where top matrices are generally more informative.
 #' @param background.model Background model is a tab-delimited specification of oligonucleotide frequencies.
-#' @param organism To use a precalculated background model from RSAT,  choose the organism corresponding to the background model. Works with background and markov options.
-#' @param background To use a precalculated background model from RSAT. Works with organism and markov options. Type of sequences used as background model for estimating expected oligonucleotide frequencies. Supported: \code{upstream},  \code{upstream-noorf},  \code{upstream-noorf-rm},  \code{intergenic}.
+#' @param organism To use a precalculated background model from RSAT, choose the organism corresponding to the background model. Works with background and markov options.
+#' @param background To use a precalculated background model from RSAT. Works with organism and markov options. Type of sequences used as background model for estimating expected oligonucleotide frequencies.
+#' Supported:
+#' \itemize{
+#' \item \code{upstream}
+#' \item \code{upstream-noorf}
+#' \item \code{upstream-noorf-rm}
+#' \item \code{intergenic}
+#' }
 #' @param background.input Calculate background model from the input sequence set. This option requires to specify the order of the background model with the option markov.
 #' @param background.window Size of the sliding window for the background model calculation. This option requires to specify the order of the background model with the option markov (suitable for short order model only markov 0 or 1)
 #' @param markov Order of the markov chain for the background model. This option is incompatible with the option background.
@@ -42,7 +63,27 @@
 #' }
 #' @param sort.distrib Sort score distribution by decreasing value of significance,  if value TRUE. By default,  the score distributions are sorted by score (weight).
 #' @param lth Lower threshold on some parameter. Format=list of 'parameter value'.
-#' Supported fields:\code{score}, \code{pval}, \code{eval}, \code{sig}, \code{normw}, \code{proba_M}, \code{proba_B}, \code{rank}, \code{crer_sites}, \code{crer_size}, \code{occ}, \code{occ_sum}, \code{inv_cum}, \code{exp_occ}, \code{occ_pval}, \code{occ_eval}, \code{occ_sig}, \code{occ_sig_rank}.
+#' Supported fields:
+#' \itemize{
+#' \item \code{score}
+#' \item \code{pval}
+#' \item \code{eval}
+#' \item \code{sig}
+#' \item \code{normw}
+#' \item \code{proba_M}
+#' \item \code{proba_B}
+#' \item \code{rank}
+#' \item \code{crer_sites}
+#' \item \code{crer_size}
+#' \item \code{occ}
+#' \item \code{occ_sum}
+#' \item \code{inv_cum}
+#' \item \code{exp_occ}
+#' \item \code{occ_pval}
+#' \item \code{occ_eval}
+#' \item \code{occ_sig}
+#' \item \code{occ_sig_rank}
+#' }
 #' @param uth Upper threshold on some parameter. Format=list of 'param value'. Supported parameters: same as \code{lth}.
 #' @param str Scan 1 or 2 strands for DNA sequences.
 #' @param origin Define the origin for the calculation of positions.
@@ -54,11 +95,6 @@
 #' @examples
 #'
 #' @export
-
-
-
-
-
 
 MatrixScan <- function(sequence, matrix, sequence.format = "fasta", matrix.format = "tab",
                        quick = FALSE, n.treatment = NULL, concensus.name = NULL,
