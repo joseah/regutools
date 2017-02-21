@@ -2,7 +2,7 @@
 % Please edit documentation in R/GetSitesForTF.R
 \name{GetSitesForTF}
 \alias{GetSitesForTF}
-\title{Get binding sites for a selected Transcription Factot}
+\title{Get binding sites for a selected Transcription Factor}
 \usage{
 GetSitesForTF(tf)
 }
