@@ -13,7 +13,7 @@ GetSitesForTF(TF)
 a list comprising the query TF name, the number of binding sites, and a table with the TFBS descriptions.
 }
 \description{
-Retrieve the binding sites for a given transcripiton factor.
+Retrieve the binding sites for a given transcription factor.
 }
 \examples{
 ## Extract the binding sites for AraC
@@ -22,5 +22,5 @@ message("Got ", tfbs$nb.sites, " binding sites for ", tfbs$TF)
 head(tfbs$sites) # Print the 10 first binding sistes
 }
 \author{
-José & Jacques van Helden
+José Alquicira HErnández & Jacques van Helden
 }
