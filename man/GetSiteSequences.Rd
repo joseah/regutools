@@ -2,27 +2,27 @@
 % Please edit documentation in R/GetSiteSequences.R
 \name{GetSiteSequences}
 \alias{GetSiteSequences}
-\title{Extract sequences from a set of sites.}
+\title{Extract sequences from a set of Transcription Factor Binding Sites (TFBSs)}
 \usage{
 GetSiteSequences(tfbs, seq.format = "fasta")
 }
 \arguments{
-\item{tfbs}{a collection of sites previously retrieved from RegulonDB with the function GetSitesForTF()}
+\item{tfbs}{A collection of sites previously retrieved from RegulonDB with the function \code{GetSitesForTF()}}
 
-\item{seq.format="fasta"}{output format. Supported: "fasta", "wconsensus".}
+\item{seq.format}{Default: \code{fasta} output format. Supported: \code{fasta}, \code{wconsensus}.}
 }
 \value{
 a string with the sequences
 }
 \description{
-Return the sequences for a set of binding sites.
+Returns the sequences for a set of binding sites.
 }
 \examples{
 ## Get the binding sites for AraC and extract their sequence in fasta format
-tfbs <- GetSitesForTF(TF = "AraC")
-tfbs.seq <- GetSiteSequences(tfbs) # This returns a single string with "\\n" return character
+tfbs <- GetSitesForTF(tf = "AraC")
+tfbs.seq <- GetSiteSequences(tfbs) # This returns a single string with "\\n" breakline character
 cat(tfbs.seq)
 }
 \author{
-José & Jacques van Helden
+José Alquicira Hernández & Jacques van Helden
 }
