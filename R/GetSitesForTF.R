@@ -1,28 +1,29 @@
-#' @title Get sites for a selected TF.
-#' @description Retrieve the binding sites for a given transcription factor.
-#' @author José Alquicira HErnández & Jacques van Helden
-#' @param TF name of the transcription factor of interest
-#' @return a list comprising the query TF name, the number of binding sites, and a table with the TFBS descriptions.
+#' @title Get binding sites for a selected Transcription Factor
+#' @description Retrieve the binding sites and genome location for a given transcription factor.
+#' @author José Alquicira Hernández & Jacques van Helden
+#' @param tf name of the transcription factor of interest
+#' @return a dataframe with the TFBS descriptions. If the TF does not exist, return a NA.
 #' @examples
 #' ## Extract the binding sites for AraC
-#' tfbs <- GetSitesForTF(TF = "AraC")
-#' message("Got ", tfbs$nb.sites, " binding sites for ", tfbs$TF)
-#' head(tfbs$sites) # Print the 10 first binding sistes
+#' tfbs <- GetSitesForTF(tf = "AraC")
 #' @export
 #'
 
-GetSitesForTF <- function (TF) {
-  tfbs.raw <- getAttr(
-    attributes = c(
-      "name",
-      "tfbs_unique"),
-    filters = "name",
-    values = TF,
-    dataset = "TF")
+GetSitesForTF <- function(tf) {
 
-  # convert raw info into a table with 1 row per TFBS
-  # and 1 col per attribute
-  tfbs.csv <- unlist(strsplit(x = tfbs.raw$tfbs_unique, split =  ";"))
+  tfbs.raw <- tryCatch({
+    getAttr(attributes = c("name", "tfbs_unique"),
+            filters = "name",
+            values = tf,
+            dataset = "TF")
+  },error = function(cond) return(NULL))
+
+  if(is.null(tfbs.raw)){
+    return(NA)
+  }else{
+    # convert raw info into a table with 1 row per TFBS
+    # and 1 col per attribute
+    tfbs.csv <- unlist(strsplit(x = tfbs.raw$tfbs_unique, split =  ";"))
   tfbs.table <- as.data.frame(
     Reduce(rbind, strsplit(x = tfbs.csv, split = ",")), row.names = FALSE)
 
@@ -32,4 +33,5 @@ GetSitesForTF <- function (TF) {
   names(tfbs.table) <- c("ID", "left", "right", "strand", "sequence")
 
   return(tfbs.table)
+  }
 }

@@ -2,25 +2,23 @@
 % Please edit documentation in R/GetSitesForTF.R
 \name{GetSitesForTF}
 \alias{GetSitesForTF}
-\title{Get sites for a selected TF.}
+\title{Get binding sites for a selected Transcription Factot}
 \usage{
-GetSitesForTF(TF)
+GetSitesForTF(tf)
 }
 \arguments{
-\item{TF}{name of the transcription factor of interest}
+\item{tf}{name of the transcription factor of interest}
 }
 \value{
-a list comprising the query TF name, the number of binding sites, and a table with the TFBS descriptions.
+a dataframe with the TFBS descriptions. If the TF does not exist, return a NA.
 }
 \description{
-Retrieve the binding sites for a given transcription factor.
+Retrieve the binding sites and genome location for a given transcription factor.
 }
 \examples{
 ## Extract the binding sites for AraC
-tfbs <- GetSitesForTF(TF = "AraC")
-message("Got ", tfbs$nb.sites, " binding sites for ", tfbs$TF)
-head(tfbs$sites) # Print the 10 first binding sistes
+tfbs <- GetSitesForTF(tf = "AraC")
 }
 \author{
-José Alquicira HErnández & Jacques van Helden
+José Alquicira Hernández & Jacques van Helden
 }
