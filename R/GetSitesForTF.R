@@ -9,6 +9,8 @@
 #' message("Got ", tfbs$nb.sites, " binding sites for ", tfbs$TF)
 #' head(tfbs$sites) # Print the 10 first binding sistes
 #' @export
+#'
+
 GetSitesForTF <- function (TF) {
   tfbs.raw <- getAttr(
     attributes = c(
@@ -22,18 +24,12 @@ GetSitesForTF <- function (TF) {
   # and 1 col per attribute
   tfbs.csv <- unlist(strsplit(x = tfbs.raw$tfbs_unique, split =  ";"))
   tfbs.table <- as.data.frame(
-    Reduce(rbind,strsplit(x = tfbs.csv, split = ",")))
-  row.names(tfbs.table) <- NULL
+    Reduce(rbind, strsplit(x = tfbs.csv, split = ",")), row.names = FALSE)
 
   ## TO DO:
-  ## - add chromosome (for future multi-organisms ReuglonDB)
+  ## - add chromosome (for future multi-organisms RegulonDB)
   ## - add evidence
   names(tfbs.table) <- c("ID", "left", "right", "strand", "sequence")
 
-  result <- list(
-    "TF" = TF,
-    "nb.sites" = nrow(tfbs.table),
-    "sites" = tfbs.table
-  )
-  return(result)
+  return(tfbs.table)
 }
