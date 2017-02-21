@@ -2,7 +2,7 @@
 % Please edit documentation in R/GetSitesForTF.R
 \name{GetSitesForTF}
 \alias{GetSitesForTF}
-\title{Get binding sites for a selected Transcription Factor}
+\title{Get binding sites for a Transcription Factor (TF)}
 \usage{
 GetSitesForTF(tf)
 }
@@ -10,7 +10,16 @@ GetSitesForTF(tf)
 \item{tf}{name of the transcription factor of interest}
 }
 \value{
-a dataframe with the TFBS descriptions. If the TF does not exist, return a NA.
+a dataframe with the following columns:
+\itemize{
+\item ID (identifier)
+\item left position
+\item right position
+\item strand
+\item sequence
+}
+corresponding to the TFBSs associated with the TF.
+If the transcription factor does not exist, returns a NA.
 }
 \description{
 Retrieve the binding sites and genome location for a given transcription factor.
