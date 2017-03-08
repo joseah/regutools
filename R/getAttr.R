@@ -26,7 +26,7 @@ getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = 
   }
 
   # Validate attributes
-  if(!all(attributes %in% ListAttributes(dataset)["column_name"])){
+  if(!all(attributes %in% ListAttributes(dataset)[["column_name"]])){
     stop("The attributes to be retrieved do not exist. Please check ListAttributes() function.", call.= FALSE)
   }
 
@@ -41,7 +41,7 @@ getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = 
   } else {
 
     # Validate filters
-    if(!all(filters %in% ListAttributes(dataset)["column_name"])){
+    if(!all(filters %in% ListAttributes(dataset)[["column_name"]])){
       stop("Provided filters do not exist. Please check ListAttributes() function.", call.= FALSE)}
 
     # Query database
