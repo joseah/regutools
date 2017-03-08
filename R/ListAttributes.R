@@ -36,6 +36,8 @@ ListAttributes <- function(dataset){
   result <- dbGetQuery(regulon, query)
   dbDisconnect(regulon)
 
+  # Temporary solution for attributes
+  result$column_name <- tolower(result$column_name)
 
   return(result)
 }
