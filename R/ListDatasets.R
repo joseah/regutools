@@ -3,7 +3,7 @@
 #' @keywords data retrieval, datasets, database,
 #' @author
 #' Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, Josá Alquicira Hernández
-#' @example
+#' @examples
 #' listDatasets()
 #' @export
 
