@@ -19,17 +19,23 @@
 ListAttributes <- function(dataset){
 
   # Validate mart
-  if(!all(dataset %in% listDatasets())){
+  if(!all(dataset %in% ListDatasets())){
     cat("Dataset is invalid. These are all available datasets:\n")
     cat(paste(ListDatasets(), collapse = "\n"))
-    stop("Please check listDatasets() function.")
+    stop("Please check ListDatasets() function.")
   }
 
-  # Get attributes and descriptions
-  result <- getAttr(attributes = c("column_name", "comments"),
-                    filter = "table_name",
-                    values = dataset,
-                    dataset = "REGULONDB_OBJECTS")
+  # Query REGULONDB_OBJECTS table
+  query <- paste0("SELECT column_name, comments FROM REGULONDB_OBJECTS WHERE table_name = '", dataset, "';")
+
+  # Connect to database
+  regulon <- dbConnect(SQLite(),
+                       system.file("extdata", "regulondb_sqlite3.db", package = "regutools"))
+
+  # Retrieve data
+  result <- dbGetQuery(regulon, query)
+  dbDisconnect(regulon)
+
 
   return(result)
 }
