@@ -41,8 +41,8 @@ getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = 
   } else {
 
     # Validate filters
-    if(!all(filters %in% listAttributes(dataset))){
-      stop("Provided filters do not exist. Please check listAttributes() function.", call.= FALSE)}
+    if(!all(filters %in% ListAttributes(dataset)["column_name"])){
+      stop("Provided filters do not exist. Please check ListAttributes() function.", call.= FALSE)}
 
     # Query database
     query <- paste(" ", filters[1], " = '", values[1], "'", sep = "")
