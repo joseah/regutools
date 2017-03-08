@@ -21,7 +21,7 @@ ListAttributes <- function(dataset){
   # Validate mart
   if(!all(dataset %in% listDatasets())){
     cat("Dataset is invalid. These are all available datasets:\n")
-    cat(paste(listDatasets(), collapse = "\n"))
+    cat(paste(ListDatasets(), collapse = "\n"))
     stop("Please check listDatasets() function.")
   }
 
