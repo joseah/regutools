@@ -8,26 +8,26 @@
 #' @param operator  Logical operator for the filters: AND / OR.  Defaults to AND.
 #' @keywords data retrieval, attributes, filters,
 #' @export
-#' @author 
+#' @author
 #' Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, José Alquicira Hernández
-#' @examples 
-#' # Retrieve all genes included in all operons 
+#' @examples
+#' # Retrieve all genes included in all operons
 #' # regulated by CRP transcriptional factor.
-#' 
-#' getAttr(attributes = c("operon_name", "op_gene_names"), 
-#' filters = c("op_tf_names"), 
-#' values = "CRP", 
+#'
+#' getAttr(attributes = c("operon_name", "op_gene_names"),
+#' filters = c("op_tf_names"),
+#' values = "CRP",
 #' dataset = "OPERON_DM")
 
 getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = NULL, operator = 'AND'){
   # Validate dataset
-  if(!all(dataset %in% listDatasets())){
-    stop("Non-existing dataset used. Please check listDatasets() function.", call.= FALSE)
+  if(!all(dataset %in% ListDatasets())){
+    stop("Non-existing dataset used. Please check ListDatasets() function.", call.= FALSE)
   }
 
   # Validate attributes
-  if(!all(attributes %in% listAttributes(dataset))){
-    stop("The attributes to be retrieved do not exist. Please check listAttributes() function.", call.= FALSE)
+  if(!all(attributes %in% ListAttributes(dataset)["column_name"])){
+    stop("The attributes to be retrieved do not exist. Please check ListAttributes() function.", call.= FALSE)
   }
 
   # Validate if filters and values are the same size. Note: Also validates if either filters or values are null.
