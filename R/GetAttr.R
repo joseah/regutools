@@ -19,7 +19,7 @@
 #' values = "CRP",
 #' dataset = "OPERON_DM")
 
-getAttr <- function(attributes = NULL, filters= NULL, dataset = NULL, and = TRUE){
+GetAttr <- function(attributes = NULL, filters= NULL, dataset = NULL, and = TRUE){
   if (and){
     operator<-"AND"
   }else{
