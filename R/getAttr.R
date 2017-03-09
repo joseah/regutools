@@ -26,16 +26,16 @@ getAttr <- function(attributes = NULL, filters= NULL, dataset = NULL, and = TRUE
     operator<-"OR"
   }
   # Validate dataset
-  if(!all(dataset %in% regutools::listDatasets())){
-    stop("Non-existing dataset used. Please check listDatasets() function.", call.= FALSE)
+  if(!all(dataset %in% ListDatasets())){
+    stop("Non-existing dataset used. Please check ListDatasets() function.", call.= FALSE)
   }
 
   # Validate attributes
-  if(!all(attributes %in% regutools::listAttributes(dataset))){
-    At_NotEx<-(attributes %in% regutools::listAttributes(dataset))
-    Names_AtNotEx<-attributes[which(!At_NotEx)]
+  if(!all(attributes %in% ListAttributes(dataset)[["column_name"]])){
+    At_NotEx<-(attributes %in% ListAttributes(dataset)[["column_name"]])
+    Names_AtNotEx <- attributes[which(!At_NotEx)]
     #Faltasepararlosnombre
-    stop("The attribute(s) ", Names_AtNotEx , " not exist in the data set . Please check listAttributes() function.", call.= FALSE)
+    stop("The attribute(s) ", Names_AtNotEx , " not exist in the data set . Please check ListAttributes() function.", call.= FALSE)
   }
 
   if(is.null(filters) & is.null(attributes)){
