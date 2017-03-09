@@ -2,7 +2,7 @@
 % Please edit documentation in R/getAttr.R
 \name{getAttr}
 \alias{getAttr}
-\title{Get Attributes}
+\title{Get data from RegulonDB}
 \usage{
 getAttr(attributes = NULL, filters = NULL, values = NULL,
   dataset = NULL, operator = "AND")
@@ -19,7 +19,7 @@ getAttr(attributes = NULL, filters = NULL, values = NULL,
 \item{operator}{Logical operator for the filters: AND / OR.  Defaults to AND.}
 }
 \description{
-Retrieve information based on attributes and filters from datasets.
+Retrieve information based on attributes and filters from datasets in RegulonDB.
 }
 \examples{
 # Retrieve all genes included in all operons 
@@ -37,4 +37,3 @@ Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, José Alquicira Herná
 \keyword{data}
 \keyword{filters,}
 \keyword{retrieval,}
-

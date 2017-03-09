@@ -23,4 +23,3 @@ Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, José Alquicira Herná
 \keyword{attributes,}
 \keyword{data}
 \keyword{retrieval,}
-

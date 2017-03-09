@@ -37,7 +37,7 @@ getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = 
 
   # Query database
   if(is.null(filters)){
-    query <- paste0("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, "; ")
+    query <- paste("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, "; ")
   } else {
 
     # Validate filters
@@ -48,13 +48,13 @@ getAttr <- function(attributes = NULL, filters = NULL, values = NULL, dataset = 
     query <- paste(" ", filters[1], " = '", values[1], "'", sep = "")
     if(length(filters) > 1){
       query <- c(query, apply(cbind(filters,values), 1, function(x){
-        result <- paste(" ", x[1], " = '", x[2],"\"", sep = "") # x can be either a filter: x[1] or a value: x[2]
+        result <- paste(" ", x[1], " = '", x[2],"' ", sep = "") # x can be either a filter: x[1] or a value: x[2]
         return(result)
       })
       )
       query <- paste(query, collapse = operator)
     }
-    query <- paste0("SELECT ", paste(attributes, collapse = " , "), " FROM ", dataset, " WHERE ", query) #Construct query
+    query <- paste("SELECT ", paste(attributes, collapse = " , "), " FROM ", dataset, " WHERE ", query) #Construct query
 
   }
 

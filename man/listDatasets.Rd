@@ -19,4 +19,3 @@ Carmina Barberena Jonás, Jesús Emiliano Sotelo Fonseca, Josá Alquicira Herná
 \keyword{database,}
 \keyword{datasets,}
 \keyword{retrieval,}
-
