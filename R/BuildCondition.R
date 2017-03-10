@@ -17,9 +17,9 @@
 BuildCondition <- function(filters, dataset, operator){
   if(class(filters) == "list"){
     if(!all(names(filters) %in% ListAttributes(dataset)[["column_name"]])){
-      At_NotEx <- names(filters) %in% ListAttributes(dataset)[["column_name"]]
-      Names_AtNotEx <- names(filters)[which(!At_NotEx)]
-      stop("Provided filter(s) in the list ", Names_AtNotEx ,
+      non.existing.attrs.index <- names(filters) %in% ListAttributes(dataset)[["column_name"]]
+      non.existing.attrs <- names(filters)[!non.existing.attrs.index]
+      stop("Provided filter(s) in the list ", non.existing.attrs ,
            " do not exist. Please check ListAttributes() function.", call.= FALSE)
     }
     condition.format <- mapply(paste0, filters, "'", SIMPLIFY = FALSE)
