@@ -23,7 +23,7 @@ BuildCondition <- function(filters, dataset, operator){
            " do not exist. Please check ListAttributes() function.", call.= FALSE)
     }
     condition.format <- mapply(paste0, filters, "'", SIMPLIFY = FALSE)
-    condition.format <- mapply(paste, names(condition.format), t, sep = " = '" , SIMPLIFY = FALSE)
+    condition.format <- mapply(paste, names(condition.format), condition.format, sep = " = '" , SIMPLIFY = FALSE)
     condition.format <- lapply(condition.format, function(x){
       paste0("(", paste(x, collapse = " OR "), ")")
     })
