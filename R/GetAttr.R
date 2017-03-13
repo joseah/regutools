@@ -1,22 +1,21 @@
 #' @title Extract data from RegulonDB
 #' @description This function retrieves data from RegulonDB. Data can be filtered using the filter parameter.
-#' @param attributes Attributes to be retrieved.
-#' @param filters   Filters to be used.
-#' @param values Values to filter with.
-#' @param dataset Dataset to retrieve from.
-#' @param operator  Logical operator for the filters: AND / OR.  Defaults to AND.
+#' @param attributes A list or vector of attributes to be retrieved
+#' @param filters A list of filters to be used. The name of the elements should correspond to the attribute used as
+#' filter and the elements as the values. See details in the section of examples
+#' @param dataset Dataset of interest. See ListDataset function to choose a dataset and ListAttributes() to see all
+#' attributes and their descriptions available in each dataset
+#' @param operator Logical operator for the filters: AND / OR.  Defaults to AND. See details in the section of examples
 #' @keywords data retrieval, attributes, filters,
-#' @export
 #' @author
 #' Carmina Barberena Jonas, Jesús Emiliano Sotelo Fonseca, José Alquicira Hernández
 #' @examples
-#' # Retrieve all genes included in all operons
-#' # regulated by CRP transcriptional factor.
+#' # From "GENE" dataset, get the gene name and genome location (left position, right position and strand) of all genes regulated exclusively by Sigma Factor 19
 #'
-#' getAttr(attributes = c("operon_name", "op_gene_names"),
-#' filters = c("op_tf_names"),
-#' values = "CRP",
-#' dataset = "OPERON_DM")
+#' GetAttr(attributes = c("name", "posleft", "posright", "strand"),
+#' filters = list(sigma_factor = "Sigma19"),
+#' dataset = "GENE")
+#' @export
 
 GetAttr <- function(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE){
 
