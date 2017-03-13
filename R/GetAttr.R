@@ -1,6 +1,5 @@
-#' Get data from RegulonDB
-#'
-#' Retrieve information based on attributes and filters from datasets in RegulonDB.
+#' @title Extract data from RegulonDB
+#' @description This function retrieves data from RegulonDB. Data can be filtered using the filter parameter.
 #' @param attributes Attributes to be retrieved.
 #' @param filters   Filters to be used.
 #' @param values Values to filter with.
@@ -19,12 +18,19 @@
 #' values = "CRP",
 #' dataset = "OPERON_DM")
 
-GetAttr <- function(attributes = NULL, filters= NULL, dataset = NULL, and = TRUE){
-  if (and){
-    operator<-"AND"
-  }else{
-    operator<-"OR"
+GetAttr <- function(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE){
+
+  # Validate if attributes is a list or vector
+  if(!is.null(attributes) & (!is.vector(attributes))){
+    if(is.list(attributes) & is.data.frame(attributes))
+      stop('Parameter "attributes" should be a list or vector', call.= FALSE)
   }
+
+  # Validate if filters is a list
+  if(!is.null(filters) & !is.list(filters)){
+    stop('Parameter "filters" should be a list', call.= FALSE)
+  }
+
   # Validate dataset
   if(!all(dataset %in% ListDatasets())){
     stop("Non-existing dataset used. Please check ListDatasets() function.", call.= FALSE)
@@ -32,29 +38,36 @@ GetAttr <- function(attributes = NULL, filters= NULL, dataset = NULL, and = TRUE
 
   # Validate attributes
   if(!all(attributes %in% ListAttributes(dataset)[["column_name"]])){
-    At_NotEx<-(attributes %in% ListAttributes(dataset)[["column_name"]])
-    Names_AtNotEx <- attributes[which(!At_NotEx)]
-    #Faltasepararlosnombre
-    stop("The attribute(s) ", Names_AtNotEx , " not exist in the data set . Please check ListAttributes() function.", call.= FALSE)
+    non.existing.attrs.index <- attributes %in% ListAttributes(dataset)[["column_name"]]
+    non.existing.attrs <- attributes[!non.existing.attrs.index]
+    stop("Provided attribute(s) ", paste0('"',paste(non.existing.attrs, collapse = ", "), '"'),
+         " do not exist. Please check ListAttributes() function.", call.= FALSE)
+  }
+
+  # Sets logical operator
+  if(and){
+    operator <- "AND"
+  }else{
+    operator <- "OR"
   }
 
   if(is.null(filters) & is.null(attributes)){
-      query <- paste0("SELECT * FROM ", dataset, "; ")
+    query <- paste0("SELECT * FROM ", dataset, ";")
   }else if (is.null(attributes) & !is.null(filters) ) {
-    cond<-BuildCondition(filters,dataset,operator)
-    query<- paste0("SELECT * FROM ", dataset, " WHERE ", cond, "; ")
+    cond <- BuildCondition(filters, dataset, operator)
+    query <- paste0("SELECT * FROM ", dataset, " WHERE ", cond, ";")
   }else if (!is.null(attributes) & is.null(filters)){
-    query <- paste0("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, "; ")
+    query <- paste0("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, ";")
   } else {
-    cond<-BuildCondition(filters,dataset,operator)
+    cond <- BuildCondition(filters, dataset, operator)
     query <- paste("SELECT ", paste(attributes, collapse = " , "), "FROM ", dataset, " WHERE ", cond , ";") #Construct query
   }
   # Connect to database
-  regulon <- RSQLite::dbConnect(RSQLite::SQLite(), system.file("extdata", "regulondb_sqlite3.db", package = "regutools"))
-  # return(query)
+  regulon <- dbConnect(SQLite(), system.file("extdata", "regulondb_sqlite3.db", package = "regutools"))
+
   # Retrieve data
-  result <- RSQLite::dbGetQuery(regulon, query)
-  RSQLite::dbDisconnect(regulon)
+  result <- dbGetQuery(regulon, query)
+  dbDisconnect(regulon)
 
   #Check if results exist
   if(!nrow(result)){
