@@ -27,33 +27,32 @@ GetSummary<-function(regulation){
 
     #Count regulated effects
     effect <- table(TF_data$effect)
-    if(! "activator"%in%names(effect)){
-      effect <-c(effect, "activator"=0)
+    if(! "+"%in%names(effect)){
+      effect <-c(effect, "+"=0)
     }
-    if(! "repressor"%in%names(effect)){
-      effect <-c(effect, "repressor"=0)
+    if(! "-"%in%names(effect)){
+      effect <-c(effect, "-"=0)
     }
-    if(! "dual"%in%names(effect)){
-      effect <-c(effect, "dual"=0)
+    if(! "+/-"%in%names(effect)){
+      effect <-c(effect, "+/-"=0)
     }
 
     summary_row<-c(TF=x[1],
                    regulated_number=x[2],
                    regulated_percentage= (as.numeric(x[2])/length(regulation$genes))*100,
-                   activator= effect["activator"],
-                   repressor= effect["repressor"],
-                   dual=effect["dual"] ,
-                   regulated= paste(TF_data$genes, sep=", ")
+                   activator= effect["+"],
+                   repressor= effect["-"],
+                   dual=effect["+/-"] ,
+                   regulated= paste(TF_data$genes, collapse=", ")
     )
 
     return(summary_row)
 
   })
 
-  #print("Total of query genes:")
-  #print(sum(table(unique(regulation$genes))))
-  #print("Regulation by")
-  #print("TF \t # regulated genes \t + \t - \t +/- \t regulated genes")
+  summary <- data.frame(t(summary))
+  colnames(summary) <- c("TF", "Regulated_Number", "Regulated_Percentage","+","-","+/-","regulated")
+
   return(summary)
 }
 
