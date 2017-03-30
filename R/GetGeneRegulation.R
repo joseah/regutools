@@ -2,8 +2,8 @@
 #'
 #' Given a list of genes (names, bnumbers or GIs), get all transcription factors that regulate them.
 #' @param genes List of genes or GIs.
-#' @param format   Output format of data:
-#' @param output.type Should regulators be represented as TFs of genes?
+#' @param format   Output format of data: multirow, onerow, table
+#' @param output.type Should regulators be represented as TF of GENE?
 #' @keywords regulation retrieval, tf, networks,
 #' @export
 #' @author
@@ -13,10 +13,23 @@
 #'
 #' GetGeneRegulation(genes = c("araC"),
 #' format = "multirow",
-#' output.type = "TF")
+#' )
 
 
 GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
+  #Check genes parameter class
+  if(! class(genes) %in% c("vector","list","character")){
+    stop("Parameter 'genes' must be a character vector or list.",call.=FALSE)
+  }
+  #Check format parameter
+  if(! format %in% c("multirow","onerow", "table")){
+    stop("Parameter 'format' must be multirow, onerow, or table.",call.=FALSE)
+  }
+  #Check output.type
+  if(! output.type %in% c("TF","GENE")){
+    stop("Parameter 'output.type' must be either 'TF' or 'GENE'",call.=FALSE)
+  }
+
   #Convert GIs to gene names
   equivalence_table<- GetAttr(attributes=c("id","name"),dataset="GENE")
   genes<-lapply(as.list(genes),function(gene){
@@ -27,12 +40,22 @@ GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
     }
   })
 
+  if (output.type == "TF"){
+    network.type <- "TF-GENE"
+  } else if (output.type == "GENE"){
+    network.type <- "GENE-GENE"
+  }
 
   #Retrieve data from NETWORK table
   regulation <- GetAttr(attributes=c("regulated_name","regulator_name","effect"),
-                        filters=list("regulated_name"=genes),
+                        filters=list("regulated_name"=genes, "network_type"=network.type),
                         dataset="NETWORK")
   colnames(regulation)<-c("genes","regulators","effect")
+
+  #Change effect to +, - and +/-
+  regulation$effect<-sub(pattern="activator",replacement="+",x=regulation$effect)
+  regulation$effect<-sub(pattern="repressor",replacement="-",x=regulation$effect)
+  regulation$effect<-sub(pattern="dual",replacement="+/-",x=regulation$effect)
 
   #Format output
   #Multirow
@@ -45,8 +68,11 @@ GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
       genereg<-regulation[regulation[,"genes"]==x,]
       genereg<- paste(paste(genereg$regulators, genereg$effect,sep="(", collapse="), "),")",sep="")
     })
+    regulation<-unlist(regulation)
+    genes<-unlist(genes)
     regulation<-data.frame(genes,regulation)
     colnames(regulation)<-c("genes","regulators")
+
     return(regulation)
 
   #Table
@@ -66,3 +92,4 @@ GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
   }
 
 }
+
