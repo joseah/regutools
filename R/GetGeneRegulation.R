@@ -40,6 +40,7 @@ GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
     }
   })
 
+  #Checks for type of network
   if (output.type == "TF"){
     network.type <- "TF-GENE"
   } else if (output.type == "GENE"){
@@ -60,6 +61,8 @@ GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
   #Format output
   #Multirow
   if(format=="multirow"){
+    #Add internal attribute "format" to use in GetSummary function.
+    attributes(regulation)$format <- format
     return(regulation)
 
   #Onerow
@@ -73,6 +76,8 @@ GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
     regulation<-data.frame(genes,regulation)
     colnames(regulation)<-c("genes","regulators")
 
+    #Add internal attribute "format" to use in GetSummary function.
+    attributes(regulation)$format <- format
     return(regulation)
 
   #Table
@@ -87,6 +92,9 @@ GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
       rtable[regulation[i,1],regulation[i,2]]<-regulation[i,3]
     }
     regulation<-rtable
+
+    #Add internal attribute "format" to use in GetSummary function.
+    attributes(regulation)$format <- format
     return(regulation)
 
   }

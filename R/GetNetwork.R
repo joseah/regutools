@@ -15,6 +15,11 @@
 #'
 
 GetNetwork<-function(type="TF-GENE"){
+  #Check type parameter
+  if(! type %in% c("GENE-GENE","TF-GENE","TF-TF")){
+    stop("Parameter 'type' must be TF-GENE, TF-TF, or GENE-GENE.",call.=FALSE)
+  }
+
   #Get Network
   network<-GetAttr(attributes=c("regulator_name","regulated_name","effect"),
                    filters=list("network_type"=c(type)),
