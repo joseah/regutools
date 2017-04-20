@@ -17,7 +17,7 @@
 #' dataset = "GENE")
 #' @export
 
-GetAttr <- function(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE){
+GetAttr <- function(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE, interv=NULL, partialmatch=NULL){
 
   # Validate if attributes is a list or vector
   if(!is.null(attributes) & (!is.vector(attributes))){
@@ -53,12 +53,12 @@ GetAttr <- function(attributes = NULL, filters = NULL, dataset = NULL, and = TRU
   if(is.null(filters) & is.null(attributes)){
     query <- paste0("SELECT * FROM ", dataset, ";")
   }else if (is.null(attributes) & !is.null(filters) ) {
-    cond <- BuildCondition(filters, dataset, operator)
+    cond <- BuildCondition(filters, dataset, operator, interv, partialmatch)
     query <- paste0("SELECT * FROM ", dataset, " WHERE ", cond, ";")
   }else if (!is.null(attributes) & is.null(filters)){
     query <- paste0("SELECT ", paste(attributes, collapse=" , ")," FROM ", dataset, ";")
   } else {
-    cond <- BuildCondition(filters, dataset, operator)
+    cond <- BuildCondition(filters, dataset, operator, interv, partialmatch)
     query <- paste("SELECT ", paste(attributes, collapse = " , "), "FROM ", dataset, " WHERE ", cond , ";") #Construct query
   }
   # Connect to database
