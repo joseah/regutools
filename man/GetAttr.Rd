@@ -4,7 +4,12 @@
 \alias{GetAttr}
 \title{Extract data from RegulonDB}
 \usage{
+<<<<<<< HEAD
 GetAttr(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE)
+=======
+GetAttr(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE,
+  interv = NULL, partialmatch = NULL)
+>>>>>>> 137b4a3e59e6291141d4a4eb66c64e5cdde9facc
 }
 \arguments{
 \item{attributes}{A list or vector of attributes to be retrieved}
