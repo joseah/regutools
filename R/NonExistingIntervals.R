@@ -15,6 +15,7 @@
 
 
 NonExistingIntervals<-function(filters, interv, operator, partialmatch){
+  if (!(length(partialmatch)==length(filters))){
   non.interv.index<-!((names(filters) %in% interv)|(names(filters) %in% partialmatch))
   non.interv <-filters[non.interv.index]
   condition.format.non.interv <- mapply(paste0, filters[non.interv.index], "'", SIMPLIFY = FALSE)
@@ -22,8 +23,12 @@ NonExistingIntervals<-function(filters, interv, operator, partialmatch){
   condition.format.non.interv <- lapply(condition.format.non.interv, function(x){
     paste0("(", paste(x, collapse = " OR "), ")") })
   condition.non.interv <- paste(unlist(condition.format.non.interv), collapse = paste0(" ", operator, " "))
+  }
   if (!is.null(partialmatch)){
     condition.partialmatch<-ExistingPartialMatch(filters, partialmatch, operator)
+    if ((length(partialmatch)==length(filters))){
+      return( condition.partialmatch)
+    }
     condition.pmandnoin<-paste(condition.partialmatch, condition.non.interv, sep = operator, collapse = operator)
     return(condition.pmandnoin)
   }
