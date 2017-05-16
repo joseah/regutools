@@ -16,7 +16,7 @@
 #' ListAttributes("OPERON")
 #' @export
 
-ListAttributes <- function(dataset){
+ListAttributes <- function(dataset, comments=FALSE){
 
   # Validate mart
   if(!all(dataset %in% ListDatasets())){
@@ -26,8 +26,11 @@ ListAttributes <- function(dataset){
   }
 
   # Query REGULONDB_OBJECTS table
+  if (comments){
   query <- paste0("SELECT column_name, comments FROM REGULONDB_OBJECTS WHERE table_name = '", dataset, "';")
-
+  }else{
+    query <- paste0("SELECT column_name FROM REGULONDB_OBJECTS WHERE table_name = '", dataset, "';")
+  }
   # Connect to database
   regulon <- dbConnect(SQLite(),
                        system.file("extdata", "regulondb_sqlite3.db", package = "regutools"))
