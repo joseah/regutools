@@ -1,0 +1,129 @@
+---
+title: "Regutools: an R package for data extraction from RegulonDB"
+author: "Jose Alquicira Hernandez, Carmina Barberena Jonas, Jesus Emiliano Sotelo Fonseca "
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+## Introduction
+
+**RegulonDB** is a relational database that offers, in an organized and computable form, updated knowledge on transcriptional regulation in *Escherichia coli K-12*. **RegulonDB** has more than 70 tables currently available and as it continues to grow manual information extraction gets complex. This R package provides a simplified version of **RegulonDB**, as well as querying functions that make data exploration and extraction easy and automatic.
+
+## Exploring the database
+
+The simplified version of RegulonDB consists in a small number of  datasets each of them representing a regulation object. To see a list of available datasets, 
+
+```{r echo = TRUE}
+library(regutools)
+ListDatasets()
+```
+
+## Columns of a table
+
+```{r echo = TRUE}
+head(ListAttributes("GENE"))
+```
+
+## Column description
+
+```{r echo = TRUE}
+head(ListAttributes("GENE",
+               comments = TRUE))
+```
+
+## Retrieving data
+```{r echo = TRUE}
+head(GetAttr(attributes=c("posright","name"),
+        dataset="GENE"))
+```
+
+## Using filters
+```{r echo = TRUE}
+GetAttr(attributes=c("posright","name"),
+        filters=list("name"=c("araC","crp","lacI")),
+        dataset="GENE")
+```
+
+## Interval filter
+```{r echo = TRUE}
+GetAttr(attributes=c("posright","name"),
+        filters=list("posright"=c(1,5000)),
+        interv=c("posright"),
+        dataset="GENE")
+```
+
+## Partial match
+```{r echo = TRUE}
+head(GetAttr(attributes=c("posright","name"),
+        filters=list("name"="ara"),
+        partialmatch="name",
+        dataset="GENE"))
+```
+
+## Complex queries
+```{r echo = TRUE}
+dim(GetAttr(attributes = c("name", "strand", "posright", "product_name"), 
+           dataset = "GENE",
+           filters = list(name=c("ARA"),
+                          product_name=c("Ara"),
+                          strand=c("forward"),
+                          posright=c("2000","4000000")
+           ),
+           and=FALSE,
+           partialmatch = c("name", "product_name") ,
+           interv="posright" ))
+```
+## Complex queries
+```{r echo = TRUE}
+GetAttr(attributes = c("name", "strand", "posright", "product_name"), 
+           dataset = "GENE",
+           filters = list(name=c("ARA"),
+                          product_name=c("Ara"),
+                          strand=c("forward"),
+                          posright=c("2000","4000000")
+           ),
+           and=TRUE,
+           partialmatch = c("name", "product_name") ,
+           interv="posright" )
+```
+
+## Gene regulation 
+```{r echo = TRUE}
+GetGeneRegulation(c("araC","fis","crp"))
+```
+
+## Table format
+```{r echo = TRUE}
+GetGeneRegulation(c("araC","fis","crp"),
+                  format="table")
+```
+
+## Retrieve whole network
+```{r echo = TRUE}
+head(GetNetwork())
+```
+
+##  TF-TF network
+```{r echo = TRUE}
+head(GetNetwork(type = "TF-TF"))
+```
+
+## Preguntas
+¿El gen "celA" existe?
+```{r echo = TRUE, error = TRUE}
+head(GetAttr(attributes=c("name"),
+             filters=list("name"="celA"),
+             dataset="GENE"))
+```
+
+```{r echo = TRUE}
+head(GetAttr(attributes=c("name","synonyms"),
+             filters=list("synonyms"="celA"),
+             partialmatch = "synonyms",
+             dataset="GENE"))
+```
