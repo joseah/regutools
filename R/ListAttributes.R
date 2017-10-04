@@ -18,6 +18,12 @@
 
 ListAttributes <- function(dataset, comments=FALSE){
 
+  # Check if data base exists
+  if(system.file("extdata", "regulondb_sqlite3.db",
+                 package = "regutools")==""){
+    stop("Please download the data base using the GetDatabase() function.",call.=FALSE)
+  }
+
   # Validate mart
   if(!all(dataset %in% ListDatasets())){
     cat("Dataset is invalid. These are all available datasets:\n")
@@ -25,22 +31,32 @@ ListAttributes <- function(dataset, comments=FALSE){
     stop("Please check ListDatasets() function.")
   }
 
-  # Query REGULONDB_OBJECTS table
-  if (comments){
-  query <- paste0("SELECT column_name, comments FROM REGULONDB_OBJECTS WHERE table_name = '", dataset, "';")
-  }else{
-    query <- paste0("SELECT column_name FROM REGULONDB_OBJECTS WHERE table_name = '", dataset, "';")
-  }
   # Connect to database
   regulon <- dbConnect(SQLite(),
                        system.file("extdata", "regulondb_sqlite3.db", package = "regutools"))
 
-  # Retrieve data
-  result <- dbGetQuery(regulon, query)
-  dbDisconnect(regulon)
+  # Query REGULONDB_OBJECTS table
+  if (comments){
+    query <- paste0("SELECT attribute, description FROM REGULONDB_OBJECTS WHERE table_name = '", dataset, "';")
+    # Retrieve data
+    result <- dbGetQuery(regulon, query)
+    dbDisconnect(regulon)
+    # Temporary solution for attributes
+    result$attribute <- tolower(result$attribute)
+    if(dim(result)[1]==0){
+      stop("Attribute descriptions for this dataset are not currently available.")
+    }
 
-  # Temporary solution for attributes
-  result$column_name <- tolower(result$column_name)
+    return(result)
 
-  return(result)
+    }else{
+      #query <- paste0("SELECT attribute FROM REGULONDB_OBJECTS WHERE table_name = '", dataset, "';"
+      result <- dbListFields(conn = regulon, name = dataset)
+      result <- data.frame("attribute"=result)
+      return(result)
+    }
+
+
+
+
 }

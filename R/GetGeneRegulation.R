@@ -1,9 +1,9 @@
 #' Get regulation
 #'
-#' Given a list of genes (names, bnumbers or GIs), get all transcription factors that regulate them.
-#' @param genes List of genes or GIs.
-#' @param format   Output format of data: multirow, onerow, table
-#' @param output.type Should regulators be represented as TF of GENE?
+#' Given a list of genes (names, or GIs), get all transcription factors that regulate them.
+#' @param genes character vector of gene names or GIs.
+#' @param format   output format of data: "multirow", "onerow",or "table". In "multirow" format, each row represents an interaction. In "onerow", there is one row for each gene. The "table" format returns a matrix. The default output is "multirow".
+#' @param output.type should regulators be represented as TF of GENE? The default is "TF".
 #' @keywords regulation retrieval, tf, networks,
 #' @export
 #' @author
@@ -14,9 +14,23 @@
 #' GetGeneRegulation(genes = c("araC"),
 #' format = "multirow",
 #' )
+#' # Retrieve regulation of several  genes, represented as a table
+#'
+#' GetGeneRegulation(genes = c("alr", "modB","cysZ","dfp","hisM"),
+#' format = "table",
+#' output.type= "GENE"
+#' )
+
 
 
 GetGeneRegulation<-function(genes,format="multirow",output.type="TF"){
+
+  # Check if data base exists
+  if(system.file("extdata", "regulondb_sqlite3.db",
+                 package = "regutools")==""){
+    stop("Please download the database using the GetDatabase() function.",call.=FALSE)
+  }
+
   #Check genes parameter class
   if(! class(genes) %in% c("vector","list","character")){
     stop("Parameter 'genes' must be a character vector or list.",call.=FALSE)

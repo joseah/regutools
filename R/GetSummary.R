@@ -18,6 +18,12 @@
 
 GetSummary<-function(regulation){
 
+  # Check if data base exists
+  if(system.file("extdata", "regulondb_sqlite3.db",
+                 package = "regutools")==""){
+    stop("Please download the database using the GetDatabase() function.",call.=FALSE)
+  }
+
   #Regulation is a gene list
   if(class(regulation)%in%c("character","vector")){
     regulation <- GetGeneRegulation(genes=regulation)

@@ -14,42 +14,58 @@ vignette: >
 
 **RegulonDB** is a relational database that offers, in an organized and computable form, updated knowledge on transcriptional regulation in *Escherichia coli K-12*. **RegulonDB** has more than 70 tables currently available and as it continues to grow manual information extraction gets complex. This R package provides a simplified version of **RegulonDB**, as well as querying functions that make data exploration and extraction easy and automatic.
 
-## Exploring the database
+## Downloading the database
+The first step is to download the RegulonDBlite database. 
 
-The simplified version of RegulonDB consists in a small number of  datasets each of them representing a regulation object. To see a list of available datasets, 
+```{r  echo=TRUE}
+library(regutools)
+```
+
+```{r  eval=FALSE}
+GetDatabase()
+```
+
+This function will download a SQLite file to the inst/extdata directory of the package. We recommend to use this function every time a new version of the database is available. You can check the version of the database in the NEWS file.   
+
+
+## Exploring the database
+### Datasets
+The simplified version of RegulonDB consists in a small number of  datasets each of them representing a regulation object. To see a list of available datasets: 
 
 ```{r echo = TRUE}
-library(regutools)
 ListDatasets()
 ```
 
-## Columns of a table
+### Attributes
+
+After selecting a dataset of interest, the following function lists the columns available. To know which kind of information is available in the "GENE" dataset:
 
 ```{r echo = TRUE}
 head(ListAttributes("GENE"))
 ```
 
-## Column description
+By default, ListAttributes only lists the columns. However, a description for each column is available through the parameter "comments". 
 
 ```{r echo = TRUE}
 head(ListAttributes("GENE",
                comments = TRUE))
 ```
+## GetAttr
+### Retrieving data
 
-## Retrieving data
 ```{r echo = TRUE}
 head(GetAttr(attributes=c("posright","name"),
         dataset="GENE"))
 ```
 
-## Using filters
+### Using filters
 ```{r echo = TRUE}
 GetAttr(attributes=c("posright","name"),
         filters=list("name"=c("araC","crp","lacI")),
         dataset="GENE")
 ```
 
-## Interval filter
+### Interval filter
 ```{r echo = TRUE}
 GetAttr(attributes=c("posright","name"),
         filters=list("posright"=c(1,5000)),
@@ -57,7 +73,7 @@ GetAttr(attributes=c("posright","name"),
         dataset="GENE")
 ```
 
-## Partial match
+### Partial match
 ```{r echo = TRUE}
 head(GetAttr(attributes=c("posright","name"),
         filters=list("name"="ara"),
@@ -65,7 +81,7 @@ head(GetAttr(attributes=c("posright","name"),
         dataset="GENE"))
 ```
 
-## Complex queries
+### Complex queries
 ```{r echo = TRUE}
 dim(GetAttr(attributes = c("name", "strand", "posright", "product_name"), 
            dataset = "GENE",
@@ -78,7 +94,7 @@ dim(GetAttr(attributes = c("name", "strand", "posright", "product_name"),
            partialmatch = c("name", "product_name") ,
            interv="posright" ))
 ```
-## Complex queries
+### Complex queries
 ```{r echo = TRUE}
 GetAttr(attributes = c("name", "strand", "posright", "product_name"), 
            dataset = "GENE",
@@ -91,39 +107,58 @@ GetAttr(attributes = c("name", "strand", "posright", "product_name"),
            partialmatch = c("name", "product_name") ,
            interv="posright" )
 ```
+## Retrieve regulation
+In this section, we describe a set of wrapper functions for GetAttr that specialize in retrieving information from the Genetic Regulatory Network. 
 
-## Gene regulation 
-```{r echo = TRUE}
-GetGeneRegulation(c("araC","fis","crp"))
-```
+### Retrieve whole network
 
-## Table format
-```{r echo = TRUE}
-GetGeneRegulation(c("araC","fis","crp"),
-                  format="table")
-```
-
-## Retrieve whole network
+The first function retrieves the whole network.
 ```{r echo = TRUE}
 head(GetNetwork())
 ```
 
-##  TF-TF network
+###  TF-TF network
+
+There are three types of networks in RegulonDB:TF-Gene, TF-TF, and GENE-GENE. TF-GENE and GENE-GENE have the same interactions, but in the GENE-GENE type, the transcription factors are represented as genes instead of as proteins. The TF-TF network, however, is a  network subset that only has interactions between transcription factors. To change the type of network use the *type* parameter:
+
 ```{r echo = TRUE}
 head(GetNetwork(type = "TF-TF"))
 ```
 
-## Preguntas
-¿El gen "celA" existe?
+### Gene regulation
+
+The following regulation function allows to retrieve all the interactions that a gene is part of. That means all transcription factors that regulate a list of genes. The results can be presented in three formats By default, the format "multirow" is selected: 
+
+```{r echo = TRUE}
+GetGeneRegulation(c("araC","fis","crp"))
+```
+
+### Table and onerow format
+
+Other formats include table and onerow
+```{r echo = TRUE}
+GetGeneRegulation(c("araC","fis","crp"),
+                  format="table")
+GetGeneRegulation(c("araC","fis","crp"),
+                  format="onerow")
+```
+
+
+## Examples
+
+### Gene name synonyms
+In this example we want to retrieve information about a gene named "celA". First we want to know if the gene exists.
+
 ```{r echo = TRUE, error = TRUE}
 head(GetAttr(attributes=c("name"),
              filters=list("name"="celA"),
              dataset="GENE"))
 ```
-
+There is no "celA" entry in column "name". However, there is also a "synonyms" column. Since we are not sure if "celA" exists at all, let's try the "partialmatch" parameter. 
 ```{r echo = TRUE}
 head(GetAttr(attributes=c("name","synonyms"),
              filters=list("synonyms"="celA"),
              partialmatch = "synonyms",
              dataset="GENE"))
 ```
+Now we know that "celA" is named "chbB" in RegulonDB. 

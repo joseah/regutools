@@ -7,20 +7,26 @@
 GetGeneRegulation(genes, format = "multirow", output.type = "TF")
 }
 \arguments{
-\item{genes}{List of genes or GIs.}
+\item{genes}{character vector of gene names or GIs.}
 
-\item{format}{Output format of data: multirow, onerow, table}
+\item{format}{output format of data: "multirow", "onerow",or "table". In "multirow" format, each row represents an interaction. In "onerow", there is one row for each gene. The "table" format returns a matrix. The default output is "multirow".}
 
-\item{output.type}{Should regulators be represented as TF of GENE?}
+\item{output.type}{should regulators be represented as TF of GENE? The default is "TF".}
 }
 \description{
-Given a list of genes (names, bnumbers or GIs), get all transcription factors that regulate them.
+Given a list of genes (names, or GIs), get all transcription factors that regulate them.
 }
 \examples{
 # Retrieve regulation of araC
 
 GetGeneRegulation(genes = c("araC"),
 format = "multirow",
+)
+# Retrieve regulation of several  genes, represented as a table
+
+GetGeneRegulation(genes = c("alr", "modB","cysZ","dfp","hisM"),
+format = "table",
+output.type= "GENE"
 )
 }
 \author{

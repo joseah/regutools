@@ -1,7 +1,0 @@
-##Principios de diciembre
-1er Versión
-###4 Funciones totalmente funcionales 
-###Paths 
-###Contador
-
-

@@ -15,6 +15,13 @@
 #'
 
 GetNetwork<-function(type="TF-GENE"){
+
+  # Check if data base exists
+  if(system.file("extdata", "regulondb_sqlite3.db",
+                 package = "regutools")==""){
+    stop("Please download the database using the GetDatabase() function.",call.=FALSE)
+  }
+
   #Check type parameter
   if(! type %in% c("GENE-GENE","TF-GENE","TF-TF")){
     stop("Parameter 'type' must be TF-GENE, TF-TF, or GENE-GENE.",call.=FALSE)

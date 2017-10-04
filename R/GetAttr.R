@@ -19,6 +19,12 @@
 
 GetAttr <- function(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE, interv=NULL, partialmatch=NULL){
 
+  # Check if data base exists
+  if(system.file("extdata", "regulondb_sqlite3.db",
+                 package = "regutools")==""){
+    stop("Please download the database using the GetDatabase() function.",call.=FALSE)
+  }
+
   # Validate if attributes is a list or vector
   if(!is.null(attributes) & (!is.vector(attributes))){
     if(is.list(attributes) & is.data.frame(attributes))
@@ -36,8 +42,8 @@ GetAttr <- function(attributes = NULL, filters = NULL, dataset = NULL, and = TRU
   }
 
   # Validate attributes
-  if(!all(attributes %in% ListAttributes(dataset)[["column_name"]])){
-    non.existing.attrs.index <- attributes %in% ListAttributes(dataset)[["column_name"]]
+  if(!all(attributes %in% ListAttributes(dataset)[["attribute"]])){
+    non.existing.attrs.index <- attributes %in% ListAttributes(dataset)[["attribute"]]
     non.existing.attrs <- attributes[!non.existing.attrs.index]
     stop("Provided attribute(s) ", paste0('"',paste(non.existing.attrs, collapse = ", "), '"'),
          " do not exist. Please check ListAttributes() function.", call.= FALSE)

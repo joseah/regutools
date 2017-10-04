@@ -8,6 +8,13 @@
 #' @export
 
 ListDatasets <- function(){
+
+  # Check if data base exists
+  if(system.file("extdata", "regulondb_sqlite3.db",
+                 package = "regutools")==""){
+    stop("Please download the database using the GetDatabase() function.",call.=FALSE)
+  }
+
   # Connect to database
   regulon <- dbConnect(SQLite(),
                        system.file("extdata", "regulondb_sqlite3.db",

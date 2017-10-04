@@ -7,7 +7,7 @@
 ExistingPartialMatch(filters, partialmatch, operator)
 }
 \arguments{
-\item{filters}{A list with values to restrict the query. The partialmatchs of all elements in this list correspond to the attributes to bre retrieved.}
+\item{filters}{A list with values to restrict the query. The names of all elements in this list correspond to the attributes to bre retrieved.}
 
 \item{operator}{A string indicading if all conditions -\code{filters}- (AND) or some of them (OR) should be met}
 

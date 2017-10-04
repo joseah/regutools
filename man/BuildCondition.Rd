@@ -4,11 +4,7 @@
 \alias{BuildCondition}
 \title{Constructs logical condition to query database}
 \usage{
-<<<<<<< HEAD
-BuildCondition(filters, dataset, operator)
-=======
 BuildCondition(filters, dataset, operator, interv, partialmatch)
->>>>>>> 137b4a3e59e6291141d4a4eb66c64e5cdde9facc
 }
 \arguments{
 \item{filters}{A list with values to restrict the query. The names of all elements in this list correspond to the attributes to bre retrieved.}
