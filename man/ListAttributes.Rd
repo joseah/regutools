@@ -4,7 +4,7 @@
 \alias{ListAttributes}
 \title{List attributes from dataset}
 \usage{
-ListAttributes(dataset)
+ListAttributes(dataset, comments = FALSE)
 }
 \arguments{
 \item{dataset}{Dataset of interest.}

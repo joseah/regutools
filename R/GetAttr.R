@@ -10,15 +10,30 @@
 #' @author
 #' Carmina Barberena Jonas, Jesús Emiliano Sotelo Fonseca, José Alquicira Hernández
 #' @examples
-#' # From "GENE" dataset, get the gene name and genome location (left position, right position and strand) of all genes regulated exclusively by Sigma Factor 19
+#' # From "GENE" data set get all the information
+#' Genedf<-(GetAttr(dataset="GENE"))
+#' dim(Genedf)
+#' head(Genedf))
+#' # From  "GENE" data set get the posright and name
+#' head(GetAttr(attributes=c("posright","name"),
+#' dataset="GENE")
+#' # From "GENE" dataset, get the gene name, strand, posright, product name and id of all genes regulated
+#'   with name  like "ara", strand as "forward" and with a position rigth bewten 2000 and 4000
 #'
-#' GetAttr(attributes = c("name", "posleft", "posright", "strand"),
-#' filters = list(sigma_factor = "Sigma19"),
-#' dataset = "GENE")
+#' GetAttr(attributes = c("name", "strand", "posright", "product_name", "id"),
+#' dataset = "GENE",
+#' filters = list(name=c("ara"),
+#'               strand=c("forward"),
+#'               posright=c("2000","4000000")
+#' ),
+#' and=TRUE,
+#' partialmatch = "name",
+#' interv="posright")
+
 #' @export
 
 GetAttr <- function(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE, interv=NULL, partialmatch=NULL){
-
+#synonimos Partial mach (que lo busque automatoicamente)
   # Validate if attributes is a list or vector
   if(!is.null(attributes) & (!is.vector(attributes))){
     if(is.list(attributes) & is.data.frame(attributes))

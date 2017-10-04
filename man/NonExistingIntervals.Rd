@@ -4,7 +4,7 @@
 \alias{NonExistingIntervals}
 \title{Constructs a particular logical condition to query database}
 \usage{
-NonExistingIntervals(filters, interv, operator)
+NonExistingIntervals(filters, interv, operator, partialmatch)
 }
 \arguments{
 \item{filters}{A list with values to restrict the query. The names of all elements in this list correspond to the attributes to bre retrieved.}

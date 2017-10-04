@@ -4,12 +4,8 @@
 \alias{GetAttr}
 \title{Extract data from RegulonDB}
 \usage{
-<<<<<<< HEAD
-GetAttr(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE)
-=======
 GetAttr(attributes = NULL, filters = NULL, dataset = NULL, and = TRUE,
   interv = NULL, partialmatch = NULL)
->>>>>>> 137b4a3e59e6291141d4a4eb66c64e5cdde9facc
 }
 \arguments{
 \item{attributes}{A list or vector of attributes to be retrieved}
@@ -26,11 +22,25 @@ attributes and their descriptions available in each dataset}
 This function retrieves data from RegulonDB. Data can be filtered using the filter parameter.
 }
 \examples{
-# From "GENE" dataset, get the gene name and genome location (left position, right position and strand) of all genes regulated exclusively by Sigma Factor 19
+# From "GENE" data set get all the information
+Genedf<-(GetAttr(dataset="GENE"))
+dim(Genedf)
+head(Genedf))
+# From  "GENE" data set get the posright and name
+head(GetAttr(attributes=c("posright","name"),
+dataset="GENE")
+# From "GENE" dataset, get the gene name, strand, posright, product name and id of all genes regulated
+  with name  like "ara", strand as "forward" and with a position rigth bewten 2000 and 4000
 
-GetAttr(attributes = c("name", "posleft", "posright", "strand"),
-filters = list(sigma_factor = "Sigma19"),
-dataset = "GENE")
+GetAttr(attributes = c("name", "strand", "posright", "product_name", "id"),
+dataset = "GENE",
+filters = list(name=c("ara"),
+              strand=c("forward"),
+              posright=c("2000","4000000")
+),
+and=TRUE,
+partialmatch = "name",
+interv="posright")
 }
 \author{
 Carmina Barberena Jonas, Jesús Emiliano Sotelo Fonseca, José Alquicira Hernández
