@@ -3,7 +3,7 @@ Title: Extracts and processes data from RegulonDB
 Version: 0.0.0.9000
 Authors@R: person("Jose", "Alquicira-Hernandez", email = "joseah@lcg.unam.mx", role = c("aut", "cre"))
 Description: Extracts and processes data from RegulonDB
-Depends: R (>= 3.0.0), RSQLite, httr, XML
+Depends: R (>= 3.0.0), RSQLite, httr, XML, DBI
 License: GNU GENERAL PUBLIC LICENSE
 Encoding: UTF-8
 Imports:
@@ -11,7 +11,8 @@ Imports:
     roxygen2,
     devtools,
     httr,
-    XML
+    XML,
+    DBI
 LazyData: true
 RoxygenNote: 6.0.1.9000
 Suggests: testthat
